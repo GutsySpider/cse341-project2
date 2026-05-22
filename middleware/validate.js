@@ -29,7 +29,7 @@ const saveCompetitor = (req, res, next) => {
         firstName: 'required|string',
         lastName: 'required|string',
         email: 'required|email',
-        phone: 'required|phone',
+        phone: 'required|string',
         weight: 'required|integer',
         beltColor: 'required|string',
         gym: 'required|string'

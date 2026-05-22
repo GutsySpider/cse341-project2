@@ -2,23 +2,25 @@ const mongodb = require("../data/database");
 const ObjectId = require("mongodb").ObjectId;
 
 const getAll = async (req, res) => {
+  //#swagger.tags=['Competitors']
   try {
     const competitors = await mongodb
       .getDatabase()
       .db()
-      .collection("competitor")
+      .collection("competitors")
       .find()
       .toArray();
 
-    res.status(200).json(competitor);
+    res.status(200).json(competitors);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 };
 
 const getSingle = async (req, res) => {
+  //#swagger.tags=['Competitors']
   if (!ObjectId.isValid(req.params.id)) {
-    res.status(400).json("Must use a valid contact id to find competitor.");
+    res.status(400).json("Must use a valid competitor id to find competitor.");
   }
   try {
     const competitorId = new ObjectId(req.params.id);
@@ -36,7 +38,7 @@ const getSingle = async (req, res) => {
 };
 
 const createCompetitor = async (req, res) => {
-  //#swagger.tags=['Competitor']
+  //#swagger.tags=['Competitors']
   const competitor = {
     firstName: req.body.firstName,
     lastName: req.body.lastName,
@@ -44,8 +46,7 @@ const createCompetitor = async (req, res) => {
     phone: req.body.phone,
     weight: req.body.weight,
     beltColor: req.body.beltColor,
-    gym: req.body.gym
-    
+    gym: req.body.gym,
   };
   const response = await mongodb
     .getDatabase()
@@ -66,7 +67,7 @@ const createCompetitor = async (req, res) => {
 const updateCompetitor = async (req, res) => {
   //#swagger.tags=['Competitors']
   if (!ObjectId.isValid(req.params.id)) {
-    res.status(400).json("Must use a valid contact id to find competitor.");
+    res.status(400).json("Must use a valid competitor id to find competitor.");
   }
   const competitorId = new ObjectId(req.params.id);
   const competitor = {
@@ -76,7 +77,7 @@ const updateCompetitor = async (req, res) => {
     phone: req.body.phone,
     weight: req.body.weight,
     beltColor: req.body.beltColor,
-    gym: req.body.gym
+    gym: req.body.gym,
   };
   const response = await mongodb
     .getDatabase()
