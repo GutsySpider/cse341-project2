@@ -24,6 +24,7 @@
           }
         }
       }
+    }
     },
     "/vehicles/": {
       "get": {
@@ -67,7 +68,7 @@
                 "price": {
                   "example": "any"
                 },
-                "miles": {
+                "milesOrHours": {
                   "example": "any"
                 },
                 "type": {
@@ -149,7 +150,7 @@
                 "price": {
                   "example": "any"
                 },
-                "drive": {
+                "milesOrHours": {
                   "example": "any"
                 },
                 "type": {
