@@ -6,7 +6,7 @@ const doc = {
     description: "Vehicles & Competitors API",
   },
 
-  host: "https://cse341-project2-q1ap.onrender.com",
+  host: "cse341-project2-q1ap.onrender.com",
   schemes: ["https"],
 };
 
