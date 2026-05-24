@@ -19,10 +19,11 @@ const getAll = async (req, res) => {
 
 const getSingle = async (req, res) => {
   //#swagger.tags=['Competitors']
-  if (!ObjectId.isValid(req.params.id)) {
-    res.status(400).json("Must use a valid competitor id to find competitor.");
-  }
   try {
+    if (!ObjectId.isValid(req.params.id)) {
+      res.status(400).json("Must use a valid competitor id to find competitor.");
+    }
+
     const competitorId = new ObjectId(req.params.id);
 
     const competitor = await mongodb
@@ -39,81 +40,93 @@ const getSingle = async (req, res) => {
 
 const createCompetitor = async (req, res) => {
   //#swagger.tags=['Competitors']
-  const competitor = {
-    firstName: req.body.firstName,
-    lastName: req.body.lastName,
-    email: req.body.email,
-    phone: req.body.phone,
-    weight: req.body.weight,
-    beltColor: req.body.beltColor,
-    gym: req.body.gym,
-  };
-  const response = await mongodb
-    .getDatabase()
-    .db()
-    .collection("competitors")
-    .insertOne(competitor);
-  if (response.acknowledged) {
-    res.status(204).send();
-  } else {
-    res
-      .status(500)
-      .json(
-        response.error || "Some error occurred while updating the competitor.",
-      );
+  try {
+    const competitor = {
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      email: req.body.email,
+      phone: req.body.phone,
+      weight: req.body.weight,
+      beltColor: req.body.beltColor,
+      gym: req.body.gym,
+    };
+    const response = await mongodb
+      .getDatabase()
+      .db()
+      .collection("competitors")
+      .insertOne(competitor);
+    if (response.acknowledged) {
+      res.status(204).send();
+    } else {
+      res
+        .status(500)
+        .json(
+          response.error || "Some error occurred while updating the competitor.",
+        );
+    }
+  } catch (err) {
+    res.status(500).json({ message: err.message });
   }
 };
 
 const updateCompetitor = async (req, res) => {
   //#swagger.tags=['Competitors']
-  if (!ObjectId.isValid(req.params.id)) {
-    res.status(400).json("Must use a valid competitor id to find competitor.");
-  }
-  const competitorId = new ObjectId(req.params.id);
-  const competitor = {
-    firstName: req.body.firstName,
-    lastName: req.body.lastName,
-    email: req.body.email,
-    phone: req.body.phone,
-    weight: req.body.weight,
-    beltColor: req.body.beltColor,
-    gym: req.body.gym,
-  };
-  const response = await mongodb
-    .getDatabase()
-    .db()
-    .collection("competitors")
-    .replaceOne({ _id: competitorId }, competitor);
-  if (response.modifiedCount > 0) {
-    res.status(204).send();
-  } else {
-    res
-      .status(500)
-      .json(
-        response.error || "Some error occurred while updating the competitor.",
-      );
+  try {
+    if (!ObjectId.isValid(req.params.id)) {
+      res.status(400).json("Must use a valid competitor id to find competitor.");
+    }
+    const competitorId = new ObjectId(req.params.id);
+    const competitor = {
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      email: req.body.email,
+      phone: req.body.phone,
+      weight: req.body.weight,
+      beltColor: req.body.beltColor,
+      gym: req.body.gym,
+    };
+    const response = await mongodb
+      .getDatabase()
+      .db()
+      .collection("competitors")
+      .replaceOne({ _id: competitorId }, competitor);
+    if (response.modifiedCount > 0) {
+      res.status(204).send();
+    } else {
+      res
+        .status(500)
+        .json(
+          response.error || "Some error occurred while updating the competitor.",
+        );
+    }
+  } catch (err) {
+    res.status(500).json({ message: err.message });
   }
 };
 
 const deleteCompetitor = async (req, res) => {
   //#swagger.tags=['Competitors']
-  if (!ObjectId.isValid(req.params.id)) {
-    res.status(400).json("Must use a valid competitor id to find competitor.");
-  }
-  const competitorId = new ObjectId(req.params.id);
-  const response = await mongodb
-    .getDatabase()
-    .db()
-    .collection("competitors")
-    .deleteOne({ _id: competitorId });
-  if (response.deletedCount > 0) {
-    res.status(204).send();
-  } else {
-    res
-      .status(500)
-      .json(
-        response.error || "Some error occurred while deleting the competitor.",
-      );
+  try {
+    if (!ObjectId.isValid(req.params.id)) {
+      res.status(400).json("Must use a valid competitor id to find competitor.");
+    }
+    const competitorId = new ObjectId(req.params.id);
+    const response = await mongodb
+      .getDatabase()
+      .db()
+      .collection("competitors")
+      .deleteOne({ _id: competitorId });
+    if (response.deletedCount > 0) {
+      res.status(204).send();
+    } else {
+      res
+        .status(500)
+        .json(
+          response.error || "Some error occurred while deleting the competitor.",
+        );
+    }
+  } catch (err) {
+    res.status(500).json({ message: err.message });
   }
 };
 
