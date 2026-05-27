@@ -2,15 +2,16 @@ const router = require("express").Router();
 
 const vehiclesController = require("../controllers/vehicles");
 const validation = require("../middleware/validate");
+const { isAuthenticated } = require("../middleware/authenticate");
 
 router.get("/", vehiclesController.getAll);
 
 router.get("/:id", vehiclesController.getSingle);
 
-router.post("/", validation.saveVehicle, vehiclesController.createVehicle);
+router.post("/", isAuthenticated, validation.saveVehicle, vehiclesController.createVehicle);
 
-router.put("/:id", validation.saveVehicle, vehiclesController.updateVehicle);
+router.put("/:id", isAuthenticated, validation.saveVehicle, vehiclesController.updateVehicle);
 
-router.delete("/:id", vehiclesController.deleteVehicle);
+router.delete("/:id", isAuthenticated, vehiclesController.deleteVehicle);
 
 module.exports = router;
